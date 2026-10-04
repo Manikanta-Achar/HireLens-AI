@@ -30,7 +30,7 @@ export const uploadResume = async (req, res) => {
     }
 
     // Extract text
-    const extractedText = await extractTextFromPDF(req.file.path);
+    const extractedText = await extractTextFromPDF(req.file.buffer);
 
     if (!extractedText) {
       return res.status(400).json({

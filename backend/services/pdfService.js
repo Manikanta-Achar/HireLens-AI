@@ -1,6 +1,6 @@
 import PDFParser from "pdf2json";
 
-const extractTextFromPDF = (filePath) => {
+const extractTextFromPDF = (fileBuffer) => {
   return new Promise((resolve, reject) => {
     const pdfParser = new PDFParser();
 
@@ -34,6 +34,8 @@ const extractTextFromPDF = (filePath) => {
 
         text = text.trim();
 
+        console.log("Extracted text length:", text.length);
+
         resolve(text);
       } catch (error) {
         console.error("Text extraction error:", error);
@@ -41,7 +43,8 @@ const extractTextFromPDF = (filePath) => {
       }
     });
 
-    pdfParser.loadPDF(filePath);
+    // Load PDF directly from memory
+    pdfParser.parseBuffer(fileBuffer);
   });
 };
 
