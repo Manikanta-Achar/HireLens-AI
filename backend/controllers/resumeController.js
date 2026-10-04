@@ -29,6 +29,13 @@ export const uploadResume = async (req, res) => {
       });
     }
 
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Resume PDF is required",
+      });
+    }
+
     // Extract text
     const extractedText = await extractTextFromPDF(req.file.buffer);
 
@@ -61,7 +68,7 @@ export const uploadResume = async (req, res) => {
       candidateName: candidateInfo.candidateName || "",
       email: candidateInfo.email || "",
       fileName: req.file.originalname,
-      filePath: req.file.path,
+      filePath: "",
       extractedText,
       skills: candidateInfo.skills || [],
       education: candidateInfo.education || "",
